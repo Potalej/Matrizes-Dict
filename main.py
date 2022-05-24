@@ -60,3 +60,29 @@ class MatrizDict:
       for i in range(self.lins):
         # caso não seja nulo, evidentemente
         if matrizBase[i]: self[i,0] = matrizBase[i]
+          
+  # exibição da matriz
+  def __str__(self):
+    """Função que deixa a matriz bonitinha na hora do print.""" 
+    str_final = '['+'{:4}]\n['.format("").join([''.join(['{:5}'.format(self[coluna,linha]) for coluna in range(self.cols)]) 
+      for linha in self.lins])+"{:4}]".format("")
+    return str_final
+  
+  # funcionalidades básicas de uma matriz
+  def __getitem__(self, indice):
+    """Capturar elementos da matriz é o mínimo."""
+    # verifica se o índice está na lista de chaves do dicionário
+    if indice in self.matriz.keys(): return self.matriz[indice]
+    # se não for o caso mas o índice estiver no escopo da matriz, retorna 0
+    elif 0 <= indice[0] < self.lins and 0 <= indice[1] < self.cols: return 0
+    # se não for o caso novamente, então o índice não faz parte da matriz
+    else: raise Exception("O índice informado não faz parte da matriz.")
+  
+  def __setitem__(self, indice, valor):
+    """Ser capaz de alterar um valor da matriz também é básico."""
+    # caso o valor seja nulo
+    if valor == 0: return
+    # verifica se o índice está compreendido na matriz, e se estiver atribui
+    elif 0 <= indice[0] < self.lins and 0 <= indice[1] < self.cols: self.matriz[indice] = valor
+    # caso não, dá erro
+    else: raise Exception("O índice informado não faz parte da matriz.")
