@@ -86,3 +86,17 @@ class MatrizDict:
     elif 0 <= indice[0] < self.lins and 0 <= indice[1] < self.cols: self.matriz[indice] = valor
     # caso não, dá erro
     else: raise Exception("O índice informado não faz parte da matriz.")
+
+  # algumas operações unárias a seguir
+  def T(self):
+    """
+      Retorna a transposta da matriz.
+    """
+    # cria uma nova matriz
+    transposta = MatrizDict(lins=self.cols, cols=self.lins)
+    # a transposta vai ser a troca de índices
+    for i in range(self.lins):
+      for j in range(self.cols):
+        if self[i,j] != 0:
+          transposta[j,i] = self[i,j]
+    return transposta
