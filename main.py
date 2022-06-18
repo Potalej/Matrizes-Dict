@@ -97,7 +97,11 @@ class MatrizDict:
   def __setitem__(self, indice, valor):
     """Ser capaz de alterar um valor da matriz também é básico."""
     # caso o valor seja nulo
-    if valor == 0: return
+    if valor == 0: 
+      # verifica se tinha algo no lugar
+      if indice in self.matriz.keys():
+        self.matriz.pop(indice, None)
+      return
     # verifica se o índice está compreendido na matriz
     if 0 <= indice[0] < self.lins and 0 <= indice[1] < self.cols:      
       # se for o caso, atribui
@@ -106,6 +110,9 @@ class MatrizDict:
     else:
       raise Exception("O índice informado não faz parte da matriz.")
 
+  def __len__(self):
+    return self.lins
+      
   # algumas operações unárias a seguir
   def T(self):
     """
@@ -268,9 +275,6 @@ class MatrizDict:
     """
     return MatrizDict([self[i,indice] for i in range(self.lins)])
 
-  def __len__(self):
-    return self.lins
-
   def subM(self, int_lin:list, int_col:list):
     """
         Captura uma submatriz da matriz principal.
@@ -283,3 +287,20 @@ class MatrizDict:
         for col in range(int_col[0], int_col[1]):
             subMatriz[-1].append(self[lin,col])
     return MatrizDict(subMatriz)
+
+  def substM(self, int_lin:list, int_col:list, M):
+    """
+      Substitui uma submatriz da matriz completa por outra submatriz de outra matriz completa.
+    """
+    for i in range(int_lin[1]-int_lin[0]):
+      for j in range(int_col[1]-int_col[0]):
+        self[int_lin[0]+i,int_col[0]+j] = M[i,j]
+
+  def lista(self):
+    """
+      Retorna a matriz no formato de lista.
+    """
+    lista = [[
+      self[i,j] for j in range(self.cols)
+    ] for i in range(self.lins)]
+    return lista
